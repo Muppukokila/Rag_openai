@@ -47,17 +47,17 @@ if uploaded_file:
 
     # Define prompt template
     prompt = PromptTemplate(
-        input_variables=["context", "question"],
-        template="""You are an assistant helping improve documents.
-Based on the context, suggest what could be implemented, added, or improved.
-Be practical and concise (max 3 suggestions).
+    input_variables=["context", "question"],
+    template="""
+You are an AI assistant. Use the context below to answer the question as accurately and concisely as possible.
+If the answer is not in the context, say "I could not find the answer in the document."
 
 Context:
 {context}
 
 Question: {question}
 Answer:"""
-    )
+)
 
     # Initialize QA chain
     if "qa" not in st.session_state:
