@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitters import RecursiveCharacterTextSplitter
+from langchain_textsplitters import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chains import RetrievalQA
