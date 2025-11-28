@@ -3,11 +3,12 @@ import streamlit as st
 import os
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_community.vectorstores import Chroma
-from langchain_experimental.chat_models import RetrievalQA
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
+from langchain.chat_models import ChatOpenAI
 
 # --- Streamlit Page ---
 st.set_page_config(page_title="PDF RAG Assistant", page_icon="📄")
@@ -47,8 +48,8 @@ if uploaded_file:
 
     # Define prompt template
     prompt = PromptTemplate(
-    input_variables=["context", "question"],
-    template="""
+        input_variables=["context", "question"],
+        template="""
 You are an AI assistant. Use the context below to answer the question as accurately and concisely as possible.
 If the answer is not in the context, say "I could not find the answer in the document."
 
@@ -57,12 +58,12 @@ Context:
 
 Question: {question}
 Answer:"""
-)
+    )
 
     # Initialize QA chain
     if "qa" not in st.session_state:
         st.session_state["qa"] = RetrievalQA.from_chain_type(
-            llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0),
+            llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0),
             retriever=db.as_retriever(),
             chain_type="stuff",
             chain_type_kwargs={"prompt": prompt},
